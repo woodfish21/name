@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英打遊戲 版本四 - 十鍵掉落字母</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            padding: 20px;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            max-width: 550px;
+            width: 100%;
+            color: #333;
+            text-align: center;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .back-link {
+            color: #0f2027;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        .back-link:hover { text-decoration: underline; }
+        h1 { font-size: 1.6rem; color: #0f2027; }
+        
+        .controls {
+            background: #f1f3f5;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            text-align: left;
+        }
+        .control-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        .control-group:last-child { margin-bottom: 0; }
+        
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #2b8a3e;
+        }
+
+        /* 遊戲掉落區域 */
+        .game-area {
+            position: relative;
+            width: 100%;
+            height: 280px;
+            background: #111;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 15px;
+            border: 2px solid #333;
+        }
+        .falling-letter {
+            position: absolute;
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: #4dabf7;
+            background: rgba(255,255,255,0.1);
+            padding: 5px 15px;
+            border-radius: 8px;
+            border: 2px solid #4dabf7;
+            box-shadow: 0 0 10px #4dabf7;
+            transform: translateX(-50%);
+        }
+
+        /* CSS 模擬十鍵鍵盤 (A, S, D, F, G, H, J, K, L, ;) */
+        .keyboard {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            margin-bottom: 15px;
+        }
+        .key {
+            width: 40px;
+            height: 45px;
+            border: 2px solid #adb5bd;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            font-weight: bold;
+            background: #f8f9fa;
+            color: #333;
+            box-shadow: 0 3px 0 #adb5bd;
+            transition: all 0.1s;
+        }
+        .key.active {
+            background: #ffec99;
+            border-color: #f59f00;
+            box-shadow: 0 1px 0 #f59f00;
+            transform: translateY(2px);
+            color: #d9480f;
+        }
+
+        .btn-group { display: flex; gap: 10px; justify-content: center; }
+        button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-start { background: #40c057; color: white; }
+        .btn-start:hover { background: #37b24d; }
+        .btn-pause { background: #fd7e14; color: white; }
+        .btn-pause:hover { background: #f76707; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <a href="../index.html" class="back-link">← 回開發歷程</a>
+            <h1>版本四：十鍵掉落字母</h1>
+        </div>
+
+        <!-- 速度與難度設定 -->
+        <div class="controls">
+            <div class="control-group">
+                <label for="speed-range">每個字母落地時間：<span id="speed-val">8</span> 秒</label>
+                <input type="range" id="speed-range" min="3" max="14" value="8">
+            </div>
+            <div class="control-group">
+                <label for="accel-check">啟用漸進加速（每答對3題縮短1秒）：</label>
+                <input type="checkbox" id="accel-check">
+            </div>
+        </div>
+
+        <!-- 統計數據 -->
+        <div class="stats">
+            <div>題數：<span id="q-count">0</span> / 10</div>
+            <div>得分：<span id="score">0</span></div>
+            <div>落地錯過：<span id="miss-count">0</span></div>
+        </div>
+
+        <!-- 掉落遊戲區域 -->
+        <div class="game-area" id="game-area">
+            <div id="letter" class="falling-letter" style="display: none;">A</div>
+        </div>
+
+        <!-- 十鍵鍵盤顯示 -->
+        <div class="keyboard">
+            <div id="key-A" class="key">A</div>
+            <div id="key-S" class="key">S</div>
+            <div id="key-D" class="key">D</div>
+            <div id="key-F" class="key">F

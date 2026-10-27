@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英打遊戲開發歷程</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f4f6f9;
+            padding: 40px 20px;
+            text-align: center;
+            color: #333;
+        }
+        h1 {
+            margin-bottom: 10px;
+            font-size: 2.2rem;
+            color: #1e3c72;
+        }
+        p.subtitle {
+            margin-bottom: 30px;
+            color: #666;
+            font-size: 1rem;
+        }
+        .grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            width: 220px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            text-decoration: none;
+            color: #333;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
+        .card h2 {
+            color: #1c7ed6;
+            margin-bottom: 12px;
+            font-size: 1.4rem;
+        }
+        .card p {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        .card .tag {
+            margin-top: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #40c057;
+            background: #ebfbee;
+            padding: 4px 8px;
+            border-radius: 4px;
+            align-self: center;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>英打遊戲開發歷程</h1>
+    <p class="subtitle">點擊下方卡片即可體驗各階段開發成果</p>
+
+    <div class="grid">
+        <!-- 版本一：連結至外部 english-typing 網站 -->
+        <a href="https://woodfish21.github.io/english-typing/" target="_blank" class="card">
+            <div>
+                <h2>版本一</h2>
+                <p>基礎畫面展示與靜態「開始」按鈕預告頁。</p>
+            </div>
+            <span class="tag">外部網站</span>
+        </a>
+
+        <!-- 版本二：已更新為你的 english-typing-2 連結 -->
+        <a href="https://woodfish21.github.io/english-typing-2/" target="_blank" class="card">
+            <div>
+                <h2>版本二</h2>
+                <p>引入鍵盤圖片與按鈕點擊雙嗶聲音效。</p>
+            </div>
+            <span class="tag">外部網站</span>
+        </a>
+
+        <!-- 版本三：同 repo 內的 v3/index.html -->
+        <a href="v3/index.html" class="card">
+            <div>
+                <h2>版本三</h2>
+                <p>左手 ASDF 鍵盤位練習與單字高亮提示。</p>
+            </div>
+            <span class="tag">子資料夾 v3</span>
+        </a>
+
+        <!-- 版本四：同 repo 內的 v4/index.html -->
+        <a href="v4/index.html" class="card">
+            <div>
+                <h2>版本四</h2>
+                <p>十鍵字母掉落遊戲，支援速度與難度調控。</p>
+            </div>
+            <span class="tag">子資料夾 v4</span>
+        </a>
+    </div>
+
+</body>
+</html>

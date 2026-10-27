@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英打遊戲 版本三 - ASDF 練習</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            padding: 20px;
+        }
+        .container {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .back-link {
+            color: #1e3c72;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        h1 {
+            font-size: 1.8rem;
+            color: #1e3c72;
+        }
+        .stats {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin: 15px 0;
+            color: #2b8a3e;
+        }
+        .target-box {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #d9480f;
+            margin: 20px 0;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 2px dashed #ced4da;
+        }
+        /* CSS 繪製鍵盤 */
+        .keyboard {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin: 25px 0;
+        }
+        .key {
+            width: 60px;
+            height: 60px;
+            border: 2px solid #adb5bd;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: #f1f3f5;
+            box-shadow: 0 4px 0 #adb5bd;
+            transition: all 0.1s ease;
+        }
+        .key.active {
+            background: #ffec99;
+            border-color: #f59f00;
+            box-shadow: 0 2px 0 #f59f00;
+            transform: translateY(2px);
+            color: #d9480f;
+        }
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-start {
+            background: #40c057;
+            color: white;
+        }
+        .btn-start:hover {
+            background: #37b24d;
+        }
+        .btn-stop {
+            background: #fa5252;
+            color: white;
+        }
+        .btn-stop:hover {
+            background: #f03e3e;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <!-- 回到上一層開發歷程首頁 -->
+            <a href="../index.html" class="back-link">← 回開發歷程</a>
+            <h1>版本三：ASDF 練習</h1>
+        </div>
+
+        <div class="stats">得分：<span id="score">0</span></div>
+
+        <div>請按下畫面上亮起的字母：</div>
+        <div id="target-letter" class="target-box">點擊開始練習</div>
+
+        <!-- CSS 模擬 ASDF 按鍵 -->
+        <div class="keyboard">
+            <div id="key-A" class="key">A</div>
+            <div id="key-S" class="key">S</div>
+            <div id="key-D" class="key">D</div>
+            <div id="key-F" class="key">F</div>
+        </div>
+
+        <div class="btn-group">
+            <button id="start-btn" class="btn-start">開始練習</button>
+            <button id="stop-btn" class="btn-stop" style="display: none;">停止練習</button>
+        </div>
+    </div>
+
+    <script>
+        const keys = ['A', 'S', 'D', 'F'];
+        let currentKey = '';
+        let score = 0;
+        let isPlaying = false;
+
+        const targetDisplay = document.getElementById('target-letter');
+        const scoreDisplay = document.getElementById('score');
+        const startBtn = document.getElementById('start-btn');
+        const stopBtn = document.getElementById('stop-btn');
+
+        function nextQuestion() {
+            // 隨機選取 A, S, D, F 其中的一個字母
+            const randomIndex = Math.floor(Math.random() * keys.length);
+            currentKey = keys[randomIndex];
+            targetDisplay.textContent = currentKey;
+
+            // 清除所有按鈕的高亮狀態
+            keys.forEach(k => {
+                document.getElementById(`key-${k}`).classList.remove('active');
+            });
+
+            // 亮起目標按鍵
+            document.getElementById(`key-${currentKey}`).classList.add('active');
+        }
+
+        function startGame() {
+            isPlaying = true;
+            score = 0;
+            scoreDisplay.textContent = score;
+            startBtn.style.display = 'none';
+            stopBtn.style.display = 'inline-block';
+            nextQuestion();
+        }
+
+        function stopGame() {
+            isPlaying = false;
+            targetDisplay.textContent = '練習已停止';
+            keys.forEach(k => {
+                document.getElementById(`key-${k}`).classList.remove('active');
+            });
+            startBtn.style.display = 'inline-block';
+            stopBtn.style.display = 'none';
+        }
+
+        // 監聽鍵盤按下事件（防止長按連續計分）
+        window.addEventListener('keydown', (e) => {
+            if (!isPlaying || e.repeat) return;
+
+            const pressedKey = e.key.toUpperCase();
+
+            if (pressedKey === currentKey) {
+                score++;
+                scoreDisplay.textContent = score;
+                nextQuestion();
+            }
+        });
+
+        startBtn.addEventListener('click', startGame);
+        stopBtn.addEventListener('click', stopGame);
+    </script>
+</body>
+</html>

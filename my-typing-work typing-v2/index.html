@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英打遊戲版本二</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h1>英打遊戲版本二</h1>
+
+    <div class="game-card">
+        <!-- 鍵盤圖片 -->
+        <div>
+            <img src="assets/keyboard.png" alt="鍵盤圖片" class="keyboard-img">
+        </div>
+
+        <!-- 數據統計 -->
+        <div class="stats">
+            <div>剩餘時間：<span id="time">30</span> 秒</div>
+            <div>得分：<span id="score">0</span></div>
+            <div>最高分：<span id="highscore">0</span></div>
+        </div>
+
+        <!-- 單字顯示區 -->
+        <div id="word-display" class="word-display">點擊開始進行遊戲</div>
+
+        <!-- 輸入框 -->
+        <input type="text" id="word-input" placeholder="在這裡輸入單字..." disabled autocomplete="off">
+
+        <!-- 按鈕區域 -->
+        <div>
+            <button id="start-btn">開始遊戲</button>
+        </div>
+
+        <!-- 訊息提示 -->
+        <div id="message" class="message"></div>
+    </div>
+
+    <!-- 💡 步驟五新增：遊戲結束結算彈窗 (Modal) -->
+    <div id="game-over-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h2>🎮 遊戲結束！</h2>
+            <p>本次得分：<span id="modal-final-score">0</span> 分</p>
+            <p>歷史最高：<span id="modal-highscore">0</span> 分</p>
+            <button id="restart-btn">再玩一次</button>
+        </div>
+    </div>
+
+    <!-- 💡 步驟三/四/五：引入 JavaScript 控制檔案 -->
+    <script src="script.js"></script>
+    <script src="modal.js"></script>
+</body>
+</html>

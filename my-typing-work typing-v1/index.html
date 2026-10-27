@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英打遊戲版本二</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 30px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            color: #333;
+        }
+        .keyboard-img {
+            max-width: 200px;
+            margin: 15px 0;
+        }
+        .game-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            display: inline-block;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+        .word-display {
+            font-size: 2rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            color: #2c3e50;
+            margin: 15px 0;
+            min-height: 48px;
+        }
+        input[type="text"] {
+            font-size: 1.2rem;
+            padding: 8px 12px;
+            width: 80%;
+            border: 2px solid #ccc;
+            border-radius: 6px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        button {
+            font-size: 1.1rem;
+            padding: 10px 25px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            transition: background-color 0.2s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 15px 0;
+            font-size: 1.1rem;
+        }
+        .message {
+            margin-top: 15px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #e74c3c;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>英打遊戲版本二</h1>
+
+    <div class="game-card">
+        <!-- 鍵盤圖片 -->
+        <div>
+            <img src="assets/keyboard.png" alt="鍵盤圖片" class="keyboard-img">
+        </div>
+
+        <!-- 計分與倒數 -->
+        <div class="stats">
+            <div>剩餘時間：<span id="time">30</span> 秒</div>
+            <div>得分：<span id="score">0</span></div>
+        </div>
+
+        <!-- 顯示單字 -->
+        <div id="word-display" class="word-display">點擊開始進行遊戲</div>
+
+        <!-- 輸入框 -->
+        <input type="text" id="word-input" placeholder="在這裡輸入單字..." disabled autocomplete="off">
+
+        <!-- 開始按鈕 -->
+        <div>
+            <button id="start-btn">開始</button>
+        </div>
+
+        <!-- 訊息提示 -->
+        <div id="message" class="message"></div>
+    </div>
+
+    <!-- 💡 這裡成功引入第三步驟建立的 script.js -->
+    <script src="script.js"></script>
+</body>
+</html>
